@@ -1,8 +1,7 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import UploadForm from "../components/UploadForm";
-import ProductList from "../components/ProductList";
+import UploadForm from "./components/uploadform"
+import ProductList from "./components/Productlist"
 
 export default function Home() {
   const [products, setProducts] = useState([]);
