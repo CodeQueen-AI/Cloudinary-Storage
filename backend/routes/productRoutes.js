@@ -1,29 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../middleware/upload");
 const Product = require("../models/Product");
 
-// Create product + upload image
-router.post("/", upload.single("image"), async (req, res) => {
+// SAVE product (URL frontend se ayega)
+router.post("/", async (req, res) => {
   try {
-    const product = new Product({
-      name: req.body.name,
-      price: req.body.price,
-      image: req.file.path, // Cloudinary URL
-    });
+    const { name, price, image } = req.body;
 
+    const product = new Product({ name, price, image });
     await product.save();
-    res.status(201).json(product);
+
+    res.json(product);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Get all products
+// GET products
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    res.json(products); // array send ho raha
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
