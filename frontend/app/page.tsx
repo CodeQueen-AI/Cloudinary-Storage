@@ -102,7 +102,6 @@ export default function HomePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!file) return alert("Select image");
 
     const formData = new FormData();
@@ -123,7 +122,6 @@ export default function HomePage() {
       setPrice("");
       setFile(null);
 
-      // redirect to products page
       router.push("/products");
     } else {
       alert("Upload failed");
@@ -139,21 +137,35 @@ export default function HomePage() {
         alignItems: "center",
         justifyContent: "center",
         gap: "30px",
+        padding: "20px",
       }}
     >
       <form
         onSubmit={handleSubmit}
         style={{
-          width: "300px",
+          width: "320px",
           display: "flex",
           flexDirection: "column",
           gap: "20px",
         }}
       >
-        <h2 style={{ textAlign: "center" }}>Upload Product</h2>
+        {/* Heading */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: 300, // thin
+            color: "gray",
+            fontSize: "28px",
+          }}
+        >
+          Upload Product
+        </h2>
 
+        {/* Product Name */}
         <div>
-          <label>Product Name</label>
+          <label style={{ display: "block", marginBottom: "5px" }}>
+            Product Name
+          </label>
           <input
             type="text"
             value={name}
@@ -161,15 +173,17 @@ export default function HomePage() {
             style={{
               width: "100%",
               border: "none",
-              borderBottom: "2px solid black",
+              borderBottom: "2px solid #ccc",
               outline: "none",
               padding: "5px",
+              fontSize: "16px",
             }}
           />
         </div>
 
+        {/* Price */}
         <div>
-          <label>Price</label>
+          <label style={{ display: "block", marginBottom: "5px" }}>Price</label>
           <input
             type="number"
             value={price}
@@ -177,22 +191,42 @@ export default function HomePage() {
             style={{
               width: "100%",
               border: "none",
-              borderBottom: "2px solid black",
+              borderBottom: "2px solid #ccc",
               outline: "none",
               padding: "5px",
+              fontSize: "16px",
             }}
           />
         </div>
 
+        {/* Choose File */}
         <div>
-          <label>Upload Image</label>
+          <label style={{ display: "block", marginBottom: "5px" }}>
+            Upload Image
+          </label>
+          <label
+            htmlFor="file"
+            style={{
+              display: "inline-block",
+              padding: "8px 15px",
+              background: "#e0f2ff",
+              color: "#3b82f6",
+              borderRadius: "10px",
+              cursor: "pointer",
+              fontWeight: 500,
+            }}
+          >
+            {file ? file.name : "Choose File"}
+          </label>
           <input
+            id="file"
             type="file"
             onChange={(e) => setFile(e.target.files![0])}
-            style={{ marginTop: "5px" }}
+            style={{ display: "none" }}
           />
         </div>
 
+        {/* Upload Button */}
         <button
           type="submit"
           style={{
@@ -200,20 +234,28 @@ export default function HomePage() {
             alignItems: "center",
             justifyContent: "center",
             gap: "5px",
-            padding: "8px",
-            background: "#3b82f6", // blue
+            padding: "10px",
+            background: "#3b82f6",
             color: "white",
             borderRadius: "20px",
             border: "none",
             cursor: "pointer",
             fontWeight: "bold",
+            transition: "all 0.3s ease",
           }}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.background = "#2563eb")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.background = "#3b82f6")
+          }
         >
           Upload
-          <span style={{ transform: "rotate(-45deg)" }}>➔</span> {/* arrow icon */}
+          <span style={{ transform: "rotate(-45deg)" }}>➔</span>
         </button>
       </form>
 
+      {/* Notification */}
       {showMsg && (
         <div
           style={{
