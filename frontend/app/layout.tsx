@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${poppins.variable}`}
         style={{ fontFamily: "var(--font-poppins), sans-serif" }}>
         {children}
       </body>
