@@ -129,148 +129,63 @@ export default function HomePage() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "30px",
-        padding: "20px",
-      }}
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center gap-8 p-4">
       <form
         onSubmit={handleSubmit}
-        style={{
-          width: "320px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-        }}
+        className="w-80 flex flex-col gap-6"
       >
         {/* Heading */}
-        <h2
-          style={{
-            textAlign: "center",
-            fontWeight: 300, // thin
-            color: "gray",
-            fontSize: "28px",
-          }}
-        >
+        <h2 className="text-center text-gray-500 font-light text-2xl">
           Upload Product
         </h2>
 
         {/* Product Name */}
         <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Product Name
-          </label>
+          <label className="block mb-1">Product Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{
-              width: "100%",
-              border: "none",
-              borderBottom: "2px solid #ccc",
-              outline: "none",
-              padding: "5px",
-              fontSize: "16px",
-            }}
+            className="w-full border-b-2 border-gray-300 outline-none p-1 text-base"
           />
         </div>
 
         {/* Price */}
         <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Price</label>
+          <label className="block mb-1">Price</label>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            style={{
-              width: "100%",
-              border: "none",
-              borderBottom: "2px solid #ccc",
-              outline: "none",
-              padding: "5px",
-              fontSize: "16px",
-            }}
+            className="w-full border-b-2 border-gray-300 outline-none p-1 text-base"
           />
         </div>
 
         {/* Choose File */}
         <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Upload Image
-          </label>
-          <label
-            htmlFor="file"
-            style={{
-              display: "inline-block",
-              padding: "8px 15px",
-              background: "#e0f2ff",
-              color: "#3b82f6",
-              borderRadius: "10px",
-              cursor: "pointer",
-              fontWeight: 500,
-            }}
-          >
+          <label className="block mb-1">Upload Image</label>
+          <label className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-lg cursor-pointer hover:bg-blue-200 transition">
             {file ? file.name : "Choose File"}
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files![0])}
+              className="hidden"
+            />
           </label>
-          <input
-            id="file"
-            type="file"
-            onChange={(e) => setFile(e.target.files![0])}
-            style={{ display: "none" }}
-          />
         </div>
 
         {/* Upload Button */}
         <button
           type="submit"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "5px",
-            padding: "10px",
-            background: "#3b82f6",
-            color: "white",
-            borderRadius: "20px",
-            border: "none",
-            cursor: "pointer",
-            fontWeight: "bold",
-            transition: "all 0.3s ease",
-          }}
-          onMouseOver={(e) =>
-            (e.currentTarget.style.background = "#2563eb")
-          }
-          onMouseOut={(e) =>
-            (e.currentTarget.style.background = "#3b82f6")
-          }
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-2xl font-semibold hover:bg-blue-600 transition"
         >
-          Upload
-          <span style={{ transform: "rotate(-45deg)" }}>➔</span>
+          Upload <span className="rotate-[-45deg]">➔</span>
         </button>
       </form>
 
       {/* Notification */}
       {showMsg && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            background: "#4CAF50",
-            color: "white",
-            padding: "10px 15px",
-            borderRadius: "8px",
-            fontSize: "14px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-            transition: "all 0.3s ease",
-          }}
-        >
+        <div className="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transition">
           ✅ Upload Successful
         </div>
       )}
