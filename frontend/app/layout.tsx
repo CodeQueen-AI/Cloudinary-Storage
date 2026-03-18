@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google"; // add Poppins
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google"; 
 import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["100","200","300","400","500","600","700","800","900"], // all weights
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["100","200","300","400","500","600","700","800","900"], 
 });
 
 export const metadata: Metadata = {
@@ -33,8 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-        style={{ fontFamily: "var(--font-poppins), sans-serif" }}
-      >
+        style={{ fontFamily: "var(--font-poppins), sans-serif" }}>
         {children}
       </body>
     </html>
