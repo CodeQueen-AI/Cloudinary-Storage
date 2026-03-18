@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 
+// CREATE PRODUCT
 exports.createProduct = async (req, res) => {
   try {
     console.log("Body:", req.body);
@@ -19,11 +20,25 @@ exports.createProduct = async (req, res) => {
 
     await product.save();
 
-    console.log("Saved product:", product); // 🔥 IMPORTANT
+    console.log("Saved product:", product); // 🔥 CHECK
 
     res.status(201).json(product);
   } catch (err) {
-    console.error(err);
+    console.error("Error saving product:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// GET ALL PRODUCTS
+exports.getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+
+    console.log("All products:", products); // 🔥 CHECK
+
+    res.json(products);
+  } catch (err) {
+    console.error("Error fetching products:", err);
     res.status(500).json({ error: err.message });
   }
 };
