@@ -90,28 +90,17 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function ProductPage() {
-  const [products, setProducts] = useState([]);
-  const [file, setFile] = useState(null);
+export default function HomePage() {
+  const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [showMsg, setShowMsg] = useState(false);
+  const router = useRouter();
 
-  // 🔥 FETCH PRODUCTS
-  const fetchProducts = async () => {
-    const res = await fetch("http://localhost:5000/api/products");
-    const data = await res.json();
-    setProducts(data);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  // 🔥 SUBMIT FORM
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!file) return alert("Select image");
@@ -127,19 +116,15 @@ export default function ProductPage() {
     });
 
     if (res.ok) {
-      // ✅ show notification
       setShowMsg(true);
+      setTimeout(() => setShowMsg(false), 2000);
 
-      setTimeout(() => {
-        setShowMsg(false);
-      }, 2000);
-
-      // reset form
       setName("");
       setPrice("");
       setFile(null);
 
-      fetchProducts();
+      // redirect to products page
+      router.push("/products");
     } else {
       alert("Upload failed");
     }
@@ -156,7 +141,6 @@ export default function ProductPage() {
         gap: "30px",
       }}
     >
-      {/* FORM */}
       <form
         onSubmit={handleSubmit}
         style={{
@@ -168,7 +152,6 @@ export default function ProductPage() {
       >
         <h2 style={{ textAlign: "center" }}>Upload Product</h2>
 
-        {/* NAME */}
         <div>
           <label>Product Name</label>
           <input
@@ -185,7 +168,6 @@ export default function ProductPage() {
           />
         </div>
 
-        {/* PRICE */}
         <div>
           <label>Price</label>
           <input
@@ -202,46 +184,36 @@ export default function ProductPage() {
           />
         </div>
 
-        {/* FILE */}
         <div>
           <label>Upload Image</label>
           <input
             type="file"
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => setFile(e.target.files![0])}
             style={{ marginTop: "5px" }}
           />
         </div>
 
-        {/* BUTTON */}
         <button
           type="submit"
           style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
             padding: "8px",
-            background: "black",
+            background: "#3b82f6", // blue
             color: "white",
             borderRadius: "20px",
             border: "none",
             cursor: "pointer",
+            fontWeight: "bold",
           }}
         >
           Upload
+          <span style={{ transform: "rotate(-45deg)" }}>➔</span> {/* arrow icon */}
         </button>
       </form>
 
-      {/* PRODUCTS */}
-      <div style={{ textAlign: "center" }}>
-        <h2>Products</h2>
-
-        {products.map((p) => (
-          <div key={p._id} style={{ marginBottom: "20px" }}>
-            <img src={p.image} width={120} />
-            <h4>{p.name}</h4>
-            <p>{p.price}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* ✅ SIMPLE NOTIFICATION */}
       {showMsg && (
         <div
           style={{
